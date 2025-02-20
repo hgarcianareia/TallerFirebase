@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="TallerFirebase.Views.HomeView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:TallerFirebase.ViewModels"
+    x:DataType="vm:HomeViewModel">
+    <ContentPage.Content>
+        <VerticalStackLayout Margin="10" Spacing="10">
+            <Button Command="{Binding SetUserPropsCommand}" Text="Init user props" />
+            <Button Command="{Binding LogEventCommand}" Text="Loguear evento" />
+            <Button
+                BackgroundColor="Yellow"
+                Command="{Binding RecordExceptionCommand}"
+                Text="Loguear excepción"
+                TextColor="Black" />
+            <Button
+                BackgroundColor="Red"
+                Command="{Binding SimulateCrashCommand}"
+                Text="Simular Crash" />
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</ContentPage>

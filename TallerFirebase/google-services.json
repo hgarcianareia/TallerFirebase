@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "102387472092",
+    "project_id": "tallerfirebase-9509e",
+    "storage_bucket": "tallerfirebase-9509e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:102387472092:android:407187a373d15b601f8619",
+        "android_client_info": {
+          "package_name": "uy.nareia.tallerfirebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxFQEyvJNIuSgUPe37_fI4KbVPBE390Eg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

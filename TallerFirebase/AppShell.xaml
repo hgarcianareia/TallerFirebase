@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Shell
+    x:Class="TallerFirebase.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:TallerFirebase.Views"
+    Title="MauiApp1"
+    Shell.FlyoutBehavior="Flyout">
+
+    <ShellContent Title="Page 1" ContentTemplate="{DataTemplate local:HomeView}" />
+    <ShellContent Title="Page 2" ContentTemplate="{DataTemplate local:PageTwoView}" />
+
+</Shell>

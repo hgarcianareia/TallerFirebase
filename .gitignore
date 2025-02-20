@@ -1,0 +1,56 @@
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de usuario de Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Archivos de compilación y binarios
+bin/
+obj/
+
+# Paquetes y dependencias
+packages/
+*.nupkg
+*.snupkg
+project.lock.json
+project.assets.json
+
+# Configuración de usuario y cachés
+*.db
+*.log
+*.tlog
+*.ide
+.idea/
+
+# Archivos generados por MAUI y plataformas móviles
+AppPackages/
+Platforms/
+
+# Configuración específica de macOS y Android
+environment.local.json
+xcuserdata/
+*.apk
+*.aab
+*.keystore
+
+# Configuración de Xamarin/Maui
+*.xaml.g.cs
+*.css.g.cs
+*.xlf
+
+# Certificados y claves privadas
+*.pfx
+*.key
+*.cer
+*.crt
+
+# Otros archivos temporales
+*.tmp
+*.bak
+*.swp
+

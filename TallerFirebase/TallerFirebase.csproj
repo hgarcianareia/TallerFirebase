@@ -1,0 +1,102 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net9.0-android;net9.0-ios</TargetFrameworks>
+
+    <OutputType>Exe</OutputType>
+    <RootNamespace>TallerFirebase</RootNamespace>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- Display name -->
+    <ApplicationTitle>TallerFirebase</ApplicationTitle>
+
+    <!-- App Identifier -->
+    <ApplicationId>uy.nareia.tallerfirebase</ApplicationId>
+
+    <!-- Versions -->
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+
+    <!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
+    <WindowsPackageType>None</WindowsPackageType>
+
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release' And '$(TargetFramework)' == 'net9.0-ios'">
+    <RunFirebaseCrashlyticsScript>true</RunFirebaseCrashlyticsScript>
+    <PublishAot>true</PublishAot>
+    <CreatePackage>false</CreatePackage>
+    <MtouchUseLlvm>true</MtouchUseLlvm>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <!-- App Icon -->
+    <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4"/>
+
+    <!-- Splash Screen -->
+    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128"/>
+
+    <!-- Images -->
+    <MauiImage Include="Resources\Images\*"/>
+    <MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185"/>
+
+    <!-- Custom Fonts -->
+    <MauiFont Include="Resources\Fonts\*"/>
+
+    <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+    <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)"/>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0"/>
+    <PackageReference Include="Plugin.Firebase.Analytics" Version="3.1.1" />
+    <PackageReference Include="Plugin.Firebase.Crashlytics" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
+    <GoogleServicesJson Include="google-services.json" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0-ios'">
+    <BundleResource Include="GoogleService-Info.plist" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net9.0-ios')) != true">
+    <PackageReference Include="AdamE.Firebase.iOS.Installations" Version="11.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.iOS">
+      <HintPath>..\..\..\..\..\usr\local\share\dotnet\packs\Microsoft.iOS.Ref.net9.0_18.2\18.2.9173\ref\net9.0\Microsoft.iOS.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+
+  <!-- Target needed until LinkWithSwiftSystemLibraries makes it into the SDK: https://github.com/xamarin/xamarin-macios/pull/20463 -->
+  <Target Name="LinkWithSwift" DependsOnTargets="_ParseBundlerArguments;_DetectSdkLocations" BeforeTargets="_LinkNativeExecutable">
+    <PropertyGroup>
+      <_SwiftPlatform Condition="$(RuntimeIdentifier.StartsWith('iossimulator-'))">iphonesimulator</_SwiftPlatform>
+      <_SwiftPlatform Condition="$(RuntimeIdentifier.StartsWith('ios-'))">iphoneos</_SwiftPlatform>
+    </PropertyGroup>
+    <ItemGroup>
+      <_CustomLinkFlags Include="-L" />
+      <_CustomLinkFlags Include="/usr/lib/swift" />
+      <_CustomLinkFlags Include="-L" />
+      <_CustomLinkFlags Include="$(_SdkDevPath)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/$(_SwiftPlatform)" />
+      <_CustomLinkFlags Include="-Wl,-rpath" />
+      <_CustomLinkFlags Include="-Wl,/usr/lib/swift" />
+    </ItemGroup>
+  </Target>
+
+  <!--https://github.com/xamarin/GoogleApisForiOSComponents/issues/643#issuecomment-1920970044-->
+  <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
+    <_ExportSymbolsExplicitly>false</_ExportSymbolsExplicitly>
+  </PropertyGroup>
+</Project>
