@@ -29,7 +29,6 @@ project.assets.json
 
 # Archivos generados por MAUI y plataformas móviles
 AppPackages/
-Platforms/
 
 # Configuración específica de macOS y Android
 environment.local.json
