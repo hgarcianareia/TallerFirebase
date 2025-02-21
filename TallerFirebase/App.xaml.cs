@@ -14,7 +14,7 @@ public partial class App : Application
         InitializeComponent();
         _analytics = provider.GetRequiredService<IFirebaseAnalyticsService>();
         _crashlytics = provider.GetRequiredService<IFirebaseCrashlyticsService>();
-        AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
+        // AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
     }
 
     private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -24,6 +24,12 @@ public partial class App : Application
             var currentTab = Shell.Current.CurrentItem;
             _crashlytics.Log($"Current Tab: {currentTab.Title}");
         }
+    }
+
+    protected override void OnSleep()
+    {
+        base.OnSleep();
+        throw new Exception("OnSleep - Something went wrong");
     }
 
     protected override Window CreateWindow(IActivationState? activationState)

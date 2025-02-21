@@ -62,6 +62,9 @@ public static class MauiProgram
             {
                 CrossFirebase.Initialize();
                 CrossFirebaseCrashlytics.Current.SetCrashlyticsCollectionEnabled(true);
+                AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+                TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+                
                 return false;
             }));
 #else
@@ -75,5 +78,17 @@ public static class MauiProgram
         });
 
         return builder;
+    }
+
+    private static void TaskScheduler_UnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
+    {
+        CrossFirebaseCrashlytics.Current.Log("TaskScheduler.UnobservedTaskException");
+        CrossFirebaseCrashlytics.Current.Log($"{e.Exception?.ToString()}");
+    }
+
+    private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+    {
+        CrossFirebaseCrashlytics.Current.Log("AppDomain.CurrentDomain.UnhandledException");
+        CrossFirebaseCrashlytics.Current.Log($"{e.ExceptionObject?.ToString()}");
     }
 }
