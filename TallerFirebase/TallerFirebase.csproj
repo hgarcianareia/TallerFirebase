@@ -34,6 +34,10 @@
     <MtouchUseLlvm>true</MtouchUseLlvm>
   </PropertyGroup>
   
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-ios'">
+    <FirebaseCrashlyticsUploadSymbolsEnabled>True</FirebaseCrashlyticsUploadSymbolsEnabled>
+  </PropertyGroup>
+  
   <ItemGroup>
     <!-- App Icon -->
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4"/>
