@@ -8,12 +8,16 @@
     x:DataType="vm:HomeViewModel">
     <ContentPage.Content>
         <VerticalStackLayout Margin="10" Spacing="10">
-            <Button Command="{Binding SetUserPropsCommand}" Text="Init user props" />
-            <Button Command="{Binding LogEventCommand}" Text="Loguear evento" />
+            <Button Command="{Binding SetUserPropsCommand}" Text="Settear propiedades de usuario" />
+            <Button
+                BackgroundColor="Aqua"
+                Command="{Binding LogNavigationEventCommand}"
+                Text="Evento Navegación"
+                TextColor="Black" />
             <Button
                 BackgroundColor="Yellow"
                 Command="{Binding RecordExceptionCommand}"
-                Text="Loguear excepción"
+                Text="Simular Error"
                 TextColor="Black" />
             <Button
                 BackgroundColor="Red"

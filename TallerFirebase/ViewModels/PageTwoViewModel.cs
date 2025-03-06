@@ -18,63 +18,46 @@ public partial class PageTwoViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void ChangeUserProp()
+    private void SimulateCrash()
     {
-        _analytics.SetUserProperty("Edad", "28");
-        _analytics.SetUserProperty("Ciudad", "Canelones");
+        var number = new Random().Next(1, 10);
+        DivideByZeroError(number);
     }
 
     [RelayCommand]
-    private void Crash()
+    private void LogNavigationEvent()
     {
-        DivideByZeroError();
+        _analytics.LogEvent("Navegación", new Dictionary<string, object>()
+        {
+            { "Pantalla", "Pantalla 2" }
+        });
     }
 
-
     [RelayCommand]
-    private void CustomError()
+    private void RecordException()
     {
+        var number = new Random().Next(1, 10);
+        
         try
         {
-            DivideByZeroError();
+            DivideByZeroError(number);
         }
         catch (Exception e)
         {
             var errorData = new Dictionary<string, object>
             {
                 { "Pantalla", "Pantalla secundaria" },
-                { "Accion", "Intento de compra" },
-                { "Monto", 99.99 }
+                { "Accion", "Dividir entre 0" },
+                { "Monto", number }
             };
 
             _crashlytics.RecordException(e, errorData);
         }
     }
-    
-    [RelayCommand]
-    private void ErrorSDK()
-    {
-        try
-        {
-            DivideByZeroError();
-        }
-        catch (Exception e)
-        {
-            var errorData = new Dictionary<string, object>
-            {
-                { "Pantalla", "Pantalla secundaria" },
-                { "Accion", "Intento de compra" },
-                { "Monto", 99.99 }
-            };
 
-            CrossFirebaseCrashlytics.Current.RecordException(e);
-        }
-    }
-
-    private static void DivideByZeroError()
+    private static void DivideByZeroError(int number)
     {
         var zero = 0;
-
-        var div = 8 / zero;
+        var div = number / zero;
     }
 }

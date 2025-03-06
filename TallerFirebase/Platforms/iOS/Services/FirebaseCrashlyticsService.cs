@@ -33,21 +33,8 @@ public class FirebaseCrashlyticsService : IFirebaseCrashlyticsService
                 return;
             }
 
-            var errorInfo = new Dictionary<object, object>
-            {
-                { NSError.LocalizedDescriptionKey, exception.Message },
-            };
-
-            if (exception.InnerException != null)
-            {
-                errorInfo.Add(new NSString("InnerException"), exception.InnerException.Message);
-            }
-
             var error = ToNSError(exception, exception.HResult);
-            // var error = new NSError(new NSString("NonFatalError"),
-            //     exception.HResult,  
-            //     NSDictionary.FromObjectsAndKeys(errorInfo.Values.ToArray(), errorInfo.Keys.ToArray(), errorInfo.Keys.Count));
-
+            
             if (parameters?.Count > 0)
             {
                 var parametersDictionary = NSDictionary<NSString, NSObject>.FromObjectsAndKeys(

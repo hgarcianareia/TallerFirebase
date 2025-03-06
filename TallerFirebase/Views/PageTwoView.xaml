@@ -8,21 +8,20 @@
     x:DataType="vm:PageTwoViewModel">
     <ContentPage.Content>
         <VerticalStackLayout Margin="10" Spacing="10">
-            <Button Command="{Binding ChangeUserPropCommand}" Text="Cambiar propiedad" />
             <Button
-                BackgroundColor="Yellow"
-                Command="{Binding ErrorSDKCommand}"
-                Text="Error Sdk"
+                BackgroundColor="Aqua"
+                Command="{Binding LogNavigationEventCommand}"
+                Text="Evento Navegación"
                 TextColor="Black" />
             <Button
                 BackgroundColor="Yellow"
-                Command="{Binding CustomErrorCommand}"
-                Text="Error custom"
+                Command="{Binding RecordExceptionCommand}"
+                Text="Simular Error"
                 TextColor="Black" />
             <Button
                 BackgroundColor="Red"
-                Command="{Binding CrashCommand}"
-                Text="Crash" />
+                Command="{Binding SimulateCrashCommand}"
+                Text="Simular Crash" />
         </VerticalStackLayout>
     </ContentPage.Content>
 </ContentPage>

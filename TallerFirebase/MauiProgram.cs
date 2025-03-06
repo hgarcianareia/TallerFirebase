@@ -36,7 +36,6 @@ public static class MauiProgram
         builder.Services.AddTransient<PageTwoViewModel>();
         builder.Services.AddTransient<PageTwoView>();
 
-        // builder.Services.AddSingleton<IFirebaseCrashlytics>(_ => CrossFirebaseCrashlytics.Current);
         builder.Services.AddSingleton<IFirebaseAnalytics>(_ => CrossFirebaseAnalytics.Current);
         builder.Services.AddSingleton<IFirebaseAnalyticsService, FirebaseAnalyticsService>();
         
@@ -73,6 +72,7 @@ public static class MauiProgram
                 CrossFirebase.Initialize(activity);
                 CrossFirebaseCrashlytics.Current.SetCrashlyticsCollectionEnabled(true);
                 FirebaseAnalyticsImplementation.Initialize(activity);
+                CrossFirebaseCrashlytics.Current.DidCrashOnPreviousExecution();
             }));
 #endif
         });

@@ -23,21 +23,46 @@ public partial class HomeViewModel : ObservableObject
     [RelayCommand]
     private void SetUserProps()
     {
-        const string userId = "FirebaseUser1234";
+        var rnd = new Random();
+        const string userId = "FirebaseUser";
+        
+        List<string> departamentos = new List<string>()
+        {
+            "Montevideo",
+            "Canelones",
+            "Maldonado",
+            "Rocha",
+            "Paysandú"
+        };
 
-        _analytics.SetUserId(userId);
-        _crashlytics.SetUserId(userId);
+        DateTime start = new DateTime(1975, 1, 1);
+        int range = (DateTime.Today - start).Days;           
+        var birthday = start.AddDays(rnd.Next(range));
+        var today = DateTime.Today;
+        var age = today.Year - birthday.Year;
+        if (birthday.Date > today.AddYears(-age)) age--;
+        
+        _analytics.SetUserId(userId + $"- {rnd.Next(1, 5)}");
+        _crashlytics.SetUserId(userId + $"- {rnd.Next(1, 5)}");
 
-        _analytics.SetUserProperty("Edad", "30");
-        _analytics.SetUserProperty("Ciudad", "Montevideo");
-        _analytics.SetUserProperty("Fecha de nacimiento", "14/10/1994");
+        _analytics.SetUserProperty("Edad",  age.ToString());
+        _analytics.SetUserProperty("Ciudad", departamentos[rnd.Next(departamentos.Count)]);
+        _analytics.SetUserProperty("Fecha de nacimiento", birthday.ToShortDateString());
+    }
+
+    [RelayCommand]
+    private void LogNavigationEvent()
+    {
+        _analytics.LogEvent("Navegación", new Dictionary<string, object>()
+        {
+            { "Pantalla", "Pantalla principal" }
+        });
     }
 
     [RelayCommand]
     private void SimulateCrash()
     {
-        _crashlytics.Log("Log - Crash simulado");
-        throw new NullReferenceException("Crash simulado");
+        SimulateNullCrash();
     }
 
     [RelayCommand]
@@ -45,31 +70,21 @@ public partial class HomeViewModel : ObservableObject
     {
         try
         {
-            throw new NullReferenceException($"Algo dio null: {DateTime.Now.TimeOfDay.ToString()}");
+            SimulateNullCrash();
         }
         catch (Exception e)
         {
-            _crashlytics.Log("Log - Error manejado");
             var errorData = new Dictionary<string, object>
             {
                 { "Pantalla", "Pantalla principal" },
                 { "Accion", "Intento de compra" },
-                { "Monto", 99.99 }
             };
             _crashlytics.RecordException(e, errorData);
         }
     }
 
-    [RelayCommand]
-    private void LogEvent()
+    private void SimulateNullCrash()
     {
-        _analytics.LogEvent("Evento_sin_parámetros");
-
-        _analytics.LogEvent("Evento_con_parámetros", new Dictionary<string, object>()
-        {
-            { "Hora", DateTime.Now.TimeOfDay },
-            { "Int", 4 },
-            { "Boolean", true },
-        });
+        throw new NullReferenceException("Simulando Null");
     }
 }

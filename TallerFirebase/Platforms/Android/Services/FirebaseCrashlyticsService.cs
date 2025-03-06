@@ -1,4 +1,5 @@
 using Firebase.Crashlytics;
+using Plugin.Firebase.Crashlytics;
 using TallerFirebase.Services.Crashlytics;
 
 namespace TallerFirebase.Platforms.Android.Services;
@@ -43,8 +44,8 @@ public class FirebaseCrashlyticsService : IFirebaseCrashlyticsService
                     _firebaseCrashlytics.SetCustomKey(parameter.Key, parameter.Value?.ToString() ?? "null");
                 }
             }
-
-            _firebaseCrashlytics.RecordException(Java.Lang.Throwable.FromException(exception));
+            
+            _firebaseCrashlytics.RecordException(Java.Lang.Throwable.FromException(exception));  
         }
         catch (Exception ex)
         {

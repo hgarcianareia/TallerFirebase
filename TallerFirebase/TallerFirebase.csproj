@@ -17,8 +17,8 @@
     <ApplicationId>uy.nareia.tallerfirebase</ApplicationId>
 
     <!-- Versions -->
-    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>2.0</ApplicationDisplayVersion>
+    <ApplicationVersion>2</ApplicationVersion>
 
     <!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
     <WindowsPackageType>None</WindowsPackageType>
@@ -28,10 +28,16 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release' And '$(TargetFramework)' == 'net9.0-ios'">
-    <RunFirebaseCrashlyticsScript>true</RunFirebaseCrashlyticsScript>
     <PublishAot>true</PublishAot>
     <CreatePackage>false</CreatePackage>
     <MtouchUseLlvm>true</MtouchUseLlvm>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignProvision>Taller Firebase - Distribución</CodesignProvision>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignProvision>Taller Firebase - Development</CodesignProvision>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-ios'">
